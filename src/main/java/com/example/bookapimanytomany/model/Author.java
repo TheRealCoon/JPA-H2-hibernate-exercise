@@ -1,5 +1,6 @@
 package com.example.bookapimanytomany.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany/*(mappedBy = "author")*/
+    @OneToMany(mappedBy = "author")
+    @JsonBackReference
     private List<Book> books;
 
 
