@@ -2,8 +2,6 @@ package com.example.bookapimanytomany.model;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +12,8 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "title")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@NamedEntityGraph(name = "books_authors", attributeNodes = @NamedAttributeNode("authors"))
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

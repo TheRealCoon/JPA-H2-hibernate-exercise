@@ -2,9 +2,7 @@ package com.example.bookapimanytomany.controller;
 
 import com.example.bookapimanytomany.model.Author;
 import com.example.bookapimanytomany.repository.AuthorDAO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,5 +23,10 @@ public class AuthorController {
     @GetMapping("/authors/{id}")
     public Optional<Author> findAuthorById(@PathVariable long id){
         return authorDAO.findById(id);
+    }
+
+    @PostMapping("/authors")
+    public void addAuthor(@RequestBody Author author){
+        authorDAO.save(author);
     }
 }
