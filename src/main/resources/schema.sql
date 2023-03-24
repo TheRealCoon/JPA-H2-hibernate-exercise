@@ -16,26 +16,27 @@ create table book
     primary key (id)
 );
 
--- create table author_books
--- (
---     author_id long not null,
---     books_id  long not null
--- );
---
--- alter table author_books
+create table books_authors
+(
+    authors_id long not null,
+    books_id  long not null
+);
+
+-- alter table book_authors
 --     add constraint UK_books unique (books_id);
 --
--- alter table author_books
---     add constraint FK_author_books_book
---         foreign key (books_id)
---             references book;
---
--- alter table author_books
---     add constraint FK_author_books_author
+alter table books_authors
+    add constraint FK_book_authors_book
+        foreign key (books_id)
+            references book;
+
+
+alter table books_authors
+    add constraint FK_book_authors_author
+        foreign key (authors_id)
+            references author;
+
+-- alter table book
+--     add constraint FK_book_author
 --         foreign key (author_id)
 --             references author;
-
-alter table book
-    add constraint FK_book_author
-        foreign key (author_id)
-            references author;

@@ -1,9 +1,14 @@
 package com.example.bookapimanytomany.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,8 +21,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    @JsonManagedReference
-    private Author author;
+    @ManyToMany(mappedBy = "books")
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<Author> authors;
 }
