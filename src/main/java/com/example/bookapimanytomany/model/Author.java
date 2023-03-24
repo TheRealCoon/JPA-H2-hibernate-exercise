@@ -1,11 +1,10 @@
 package com.example.bookapimanytomany.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,13 +15,17 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @ManyToMany
-    @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "books_id"), inverseJoinColumns = @JoinColumn(name = "books_id"))
+    @JoinTable(
+            name="books_authors",
+            foreignKey = @ForeignKey(name = "FK_book_authors_book"),
+            inverseForeignKey = @ForeignKey(name = "FK_book_authors_author"))
     @JsonIdentityReference(alwaysAsId = true)
     private List<Book> books;
 }
