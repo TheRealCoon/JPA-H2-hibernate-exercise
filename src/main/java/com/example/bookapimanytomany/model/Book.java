@@ -22,4 +22,8 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     @JsonIdentityReference(alwaysAsId = true)
     private List<Author> authors;
+
+    public void addAuthor(Author author){
+        authors.add(author);
+    }
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import com.example.bookapimanytomany.model.Book;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +39,13 @@ public class BookController {
     public void addBook(@RequestBody BookDTO bookDTO) {
         Book book = new Book();
         book.setTitle(bookDTO.getTitle());
-        List<Author> authors = bookDTO.getAuthorIds()
-                .stream().map(aId -> authorDAO.findById(aId).orElse(null)).toList();
+        List<Long> authorIds = bookDTO.getAuthorIds();
+        List<Author> authors = new ArrayList<>();
+        if (!authorIds.isEmpty()) {
+            authors = authorDAO.findAllById(authorIds);
+        }
         book.setAuthors(authors);
+        authors.forEach(a -> a.addBook(book));
         bookDAO.save(book);
     }
 }

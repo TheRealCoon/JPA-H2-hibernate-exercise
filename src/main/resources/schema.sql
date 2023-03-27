@@ -28,13 +28,13 @@ create table books_authors
 alter table books_authors
     add constraint FK_book_authors_book
         foreign key (books_id)
-            references book;
+            references book (id);
 
 
 alter table books_authors
     add constraint FK_book_authors_author
         foreign key (authors_id)
-            references author;
+            references author (id);
 
 -- alter table book
 --     add constraint FK_book_author
