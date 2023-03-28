@@ -1,14 +1,12 @@
 package com.example.bookapimanytomany.controller;
 
 import com.example.bookapimanytomany.model.Author;
+import com.example.bookapimanytomany.model.Book;
 import com.example.bookapimanytomany.model.BookDTO;
 import com.example.bookapimanytomany.repository.AuthorDAO;
 import com.example.bookapimanytomany.repository.BookDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
-import com.example.bookapimanytomany.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +45,19 @@ public class BookController {
         book.setAuthors(authors);
         authors.forEach(a -> a.addBook(book));
         bookDAO.save(book);
+    }
+
+    @DeleteMapping("/books/{id}")
+    public void deleteBook(@PathVariable("id") long id) {
+        Book book = bookDAO.findById(id).orElseThrow();
+        book.getAuthors()
+                .forEach(author -> {
+                    author.getBooks()
+                            .removeIf(book1 -> book1.getId() == id);
+                    authorDAO.save(author);
+                });
+        book.setAuthors(null);
+        bookDAO.save(book);
+        bookDAO.deleteById(id);
     }
 }
