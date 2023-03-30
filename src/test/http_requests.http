@@ -19,6 +19,17 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "title" : "sdfsdfsdfsdf",
+  "authorIds" : [
+    7
+  ]
+}
+
+###
 GET http://localhost:8080/authors
 
 

@@ -8,6 +8,7 @@ import com.example.bookapimanytomany.repository.BookDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public void addBook(@RequestBody BookDTO bookDTO) {
+    public void addBook(@RequestBody @Valid BookDTO bookDTO) {
         Book book = new Book();
         book.setTitle(bookDTO.getTitle());
         List<Long> authorIds = bookDTO.getAuthorIds();
